@@ -5,7 +5,7 @@ require 'includes/form_handlers/login_handler.php';
 ?>
 <html>
 <head>
-	<title>Welcome to Swirlfeed!</title>
+	<title>Welcome to SociaLIKE!</title>
 	<link rel="stylesheet" href="assets/css/register_style.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 	<script type="text/javascript" src="assets/js/register.js"></script>

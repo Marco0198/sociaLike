@@ -8,8 +8,8 @@ require 'config/config.php';
 
 if (isset($_SESSION['username'])) {
 	$userLoggedIn = $_SESSION['username'];
-	// $user_details_query = mysqli_query($con, "SELECT * FROM users WHERE username='$userLoggedIn'");
-	// $user = mysqli_fetch_array($user_details_query);
+	$user_details_query = mysqli_query($con, "SELECT * FROM users WHERE username='$userLoggedIn'");
+	$user = mysqli_fetch_array($user_details_query);
 }
 else {
 	header("Location: register.php");
@@ -83,6 +83,7 @@ else {
 
 
 			<a href="<?php echo $userLoggedIn; ?>">
+            <?php echo  "Hi " . $user['first_name'] ?>
 			</a>
 			<a href="index.php">
 				<i class="fa fa-home fa-lg"></i>
@@ -165,70 +166,70 @@ else {
 	</script>
 
 	<script>
-	$(function(){
+	// $(function(){
 
 		var userLoggedIn = '<?php echo $userLoggedIn; ?>';
-		var dropdownInProgress = false;
+	// 	var dropdownInProgress = false;
 
-	    $(".dropdown_data_window").scroll(function() {
-	    	var bottomElement = $(".dropdown_data_window a").last();
-			var noMoreData = $('.dropdown_data_window').find('.noMoreDropdownData').val();
+	//     $(".dropdown_data_window").scroll(function() {
+	//     	var bottomElement = $(".dropdown_data_window a").last();
+	// 		var noMoreData = $('.dropdown_data_window').find('.noMoreDropdownData').val();
 
-	        // isElementInViewport uses getBoundingClientRect(), which requires the HTML DOM object, not the jQuery object. The jQuery equivalent is using [0] as shown below.
-	        if (isElementInView(bottomElement[0]) && noMoreData == 'false') {
-	            loadPosts();
-	        }
-	    });
+	//         // isElementInViewport uses getBoundingClientRect(), which requires the HTML DOM object, not the jQuery object. The jQuery equivalent is using [0] as shown below.
+	//         if (isElementInView(bottomElement[0]) && noMoreData == 'false') {
+	//             loadPosts();
+	//         }
+	//     });
 
-	    function loadPosts() {
-	        if(dropdownInProgress) { //If it is already in the process of loading some posts, just return
-				return;
-			}
+	//     function loadPosts() {
+	//         if(dropdownInProgress) { //If it is already in the process of loading some posts, just return
+	// 			return;
+	// 		}
 			
-			dropdownInProgress = true;
+	// 		dropdownInProgress = true;
 
-			var page = $('.dropdown_data_window').find('.nextPageDropdownData').val() || 1; //If .nextPage couldn't be found, it must not be on the page yet (it must be the first time loading posts), so use the value '1'
+	// 		var page = $('.dropdown_data_window').find('.nextPageDropdownData').val() || 1; //If .nextPage couldn't be found, it must not be on the page yet (it must be the first time loading posts), so use the value '1'
 
-			var pageName; //Holds name of page to send ajax request to
-			var type = $('#dropdown_data_type').val();
+	// 		var pageName; //Holds name of page to send ajax request to
+	// 		var type = $('#dropdown_data_type').val();
 
-			if(type == 'notification')
-				pageName = "ajax_load_notifications.php";
-			else if(type == 'message')
-				pageName = "ajax_load_messages.php";
+	// 		if(type == 'notification')
+	// 			pageName = "ajax_load_notifications.php";
+	// 		else if(type == 'message')
+	// 			pageName = "ajax_load_messages.php";
 
-			$.ajax({
-				url: "includes/handlers/" + pageName,
-				type: "POST",
-				data: "page=" + page + "&userLoggedIn=" + userLoggedIn,
-				cache:false,
+	// 		$.ajax({
+	// 			url: "includes/handlers/" + pageName,
+	// 			type: "POST",
+	// 			data: "page=" + page + "&userLoggedIn=" + userLoggedIn,
+	// 			cache:false,
 
-				success: function(response) {
+	// 			success: function(response) {
 
-					$('.dropdown_data_window').find('.nextPageDropdownData').remove(); //Removes current .nextpage 
-					$('.dropdown_data_window').find('.noMoreDropdownData').remove();
+	// 				$('.dropdown_data_window').find('.nextPageDropdownData').remove(); //Removes current .nextpage 
+	// 				$('.dropdown_data_window').find('.noMoreDropdownData').remove();
 
-					$('.dropdown_data_window').append(response);
+	// 				$('.dropdown_data_window').append(response);
 
-					dropdownInProgress = false;
-				}
-			});
-	    }
+	// 				dropdownInProgress = false;
+	// 			}
+	// 		});
+	//     }
 
-	    //Check if the element is in view
-	    function isElementInView (el) {
-	        var rect = el.getBoundingClientRect();
+	//     //Check if the element is in view
+	//     function isElementInView (el) {
+	//         var rect = el.getBoundingClientRect();
 
-	        return (
-	            rect.top >= 0 &&
-	            rect.left >= 0 &&
-	            rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) && //* or $(window).height()
-	            rect.right <= (window.innerWidth || document.documentElement.clientWidth) //* or $(window).width()
-	        );
-	    }
-	});
+	//         return (
+	//             rect.top >= 0 &&
+	//             rect.left >= 0 &&
+	//             rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) && //* or $(window).height()
+	//             rect.right <= (window.innerWidth || document.documentElement.clientWidth) //* or $(window).width()
+	//         );
+	//     }
+	// });
 
-	</script>
+	// </script>
 
 
 	<div class="wrapper">
